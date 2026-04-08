@@ -1,0 +1,87 @@
+body {
+  background-color: gray;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  padding: 20px;
+  
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+}
+input {
+  padding: 8px;
+}
+button {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.direita{
+display: block;
+margin: auto;
+justify-content: center;
+align-content: center;
+height: auto;
+width: 150px;
+
+}
+
+#imagem {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+
+h1{
+  text-align: center;
+}
+body{
+  background-color:gray
+}
+
+h2{
+  background-color:grey;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+ul{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  
+}
+
+li{
+  padding-left: 20px;
+}
+
+nav a{
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background-color: orangered;
+
+
+}
+ 
+body{
+  display: grid;
+  place-items: center;
+  height: 500vn;
+  margin: 0;
+}
