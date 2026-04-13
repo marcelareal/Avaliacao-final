@@ -3,6 +3,7 @@ let idPedidoEdicao = null;
 let idClienteEdicao = null;
 let listaPrecosProdutos = {};
 
+
 function carregarProdutos() {
   fetch("http://localhost:3000/produto")
     .then((res) => res.json())
@@ -30,7 +31,9 @@ function carregarProdutos() {
       });
     });
 }
+if(document.querySelector("#tabelaProdutos")){
 carregarProdutos();
+}
 
 function preencherFormulario(id, nome, preco, estoque) {
   document.getElementById("nome").value = nome;
@@ -44,6 +47,7 @@ function preencherFormulario(id, nome, preco, estoque) {
 }
 
 const form = document.getElementById("formProduto");
+if(form){
 const mensagem = document.getElementById("mensagemProduto");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -97,6 +101,7 @@ form.addEventListener("submit", (event) => {
     btn.innerText = "Cadastrar Produto";
   }
 });
+}
 function cancelarEdicao() {
   idEdicao = null;
   form.reset();
@@ -104,9 +109,10 @@ function cancelarEdicao() {
   document.getElementById("btnCancelar").style.display = "none";
   mensagem.innerText = "";
 }
-document
-  .getElementById("btnCancelar")
-  .addEventListener("click", cancelarEdicao);
+const btnCancelar = document.getElementById("btnCancelar");
+if(btnCancelar){
+  btnCancelar.addEventListener("click", cancelarEdicao);
+}
 
 function excluirProduto(id) {
   if (confirm("Tem certeza que deseja excluir este produto?")) {
@@ -120,13 +126,16 @@ function excluirProduto(id) {
       })
       .catch((err) => console.error("Erro ao excluir:", err));
   }
-}
+} 
+const selectPro = document.getElementById("selectProduto");
+const selectCli = document.getElementById("selectCliente");
 
 async function carregarSelects() {
+  if(selectPro){
   try {
     const resProdutos = await fetch("http://localhost:3000/produto");
     const produtos = await resProdutos.json();
-    const selectP = document.getElementById("selectProduto");
+   const selectP = document.getElementById("selectProduto");
 
     produtos.forEach((p) => {
       listaPrecosProdutos[p.ID] = p.PRECO || p.VALOR_TOTAL || p.PRECO;
@@ -137,7 +146,9 @@ async function carregarSelects() {
   } catch (error) {
     console.error("Erro ao popular o select de produto:", error);
   }
+}
 
+if(selectCli){
   try {
     const resposta = await fetch("http://localhost:3000/cliente");
     const clientes = await resposta.json();
@@ -156,11 +167,14 @@ async function carregarSelects() {
     console.error("Erro ao popular o select de clientes:", error);
   }
 }
-carregarSelects();
+}
 
-document.getElementById("selectProduto").addEventListener("change", (event) => {
-  const idSelecionado = event.target.value;
-  const campoValor = document.getElementById("valorTotal");
+
+const selectProduto = document.getElementById("selectProduto");
+if(selectProduto){
+  selectProduto.addEventListener("change", (event) => {
+    const idSelecionado = event.target.value;
+    const campoValor = document.getElementById("valorTotal");
 
   if (idSelecionado && listaPrecosProdutos[idSelecionado]) {
     campoValor.value = listaPrecosProdutos[idSelecionado];
@@ -168,6 +182,7 @@ document.getElementById("selectProduto").addEventListener("change", (event) => {
     campoValor.value = "";
   }
 });
+}
 
 function atualizarTotal() {
   const idProd = document.getElementById("selectProduto").value;
@@ -180,11 +195,16 @@ function atualizarTotal() {
   }
 }
 
-document
-  .getElementById("selectProduto")
-  .addEventListener("change", atualizarTotal);
-document.getElementById("quantidade").addEventListener("input", atualizarTotal);
+const selectProd = document.getElementById("selectProduto");
+if(selectProd){
+  selectProd.addEventListener("change", atualizarTotal);
+}
 
+const campoQuantidade = document.getElementById("quantidade");
+if(campoQuantidade){
+  campoQuantidade.addEventListener("input", atualizarTotal);
+}
+const corpoTabelaPedidos = document.querySelector("#tabelaPedidos");
 function carregarPedidos() {
   fetch("http://localhost:3000/pedido")
     .then((res) => res.json())
@@ -219,7 +239,7 @@ function carregarPedidos() {
     })
     .catch((err) => console.error("Erro ao carregar pedidos:", err));
 }
-carregarPedidos();
+
 
 function preencherFormPedido(id, idCliente, idProduto, valor, status) {
   idPedidoEdicao = id;
@@ -237,6 +257,7 @@ function preencherFormPedido(id, idCliente, idProduto, valor, status) {
 }
 
 const formPedido = document.getElementById("formPedido");
+if(formPedido){
 const mensagemPedido = document.getElementById("mensagemPedido");
 formPedido.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -270,6 +291,7 @@ formPedido.addEventListener("submit", (e) => {
       carregarPedidos();
     });
 });
+}
 
 function excluirPedido(id) {
   if (confirm("Tem certeza que deseja excluir este pedido?")) {
@@ -292,10 +314,29 @@ function cancelarEdicaoPedido() {
   document.getElementById("btnCancelarPedido").style.display = "none";
   mensagemPedido.innerText = "";
 }
-document
-  .getElementById("btnCancelarPedido")
-  .addEventListener("click", cancelarEdicaoPedido);
 
+const btnCancelarPedido = document.getElementById("btnCancelarPedido")
+if(btnCancelarPedido){
+  btnCancelarPedido.addEventListener("click", cancelarEdicaoPedido);
+}
+
+function excluirCliente(id) {
+  if (confirm("Tem certeza que deseja excluir este cliente?")) {
+    console.log("Excluindo cliente com ID:", id);
+    fetch(`http://localhost:3000/cliente/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((dados) => {
+        alert(dados.mensagem);
+        carregarClientes();
+      })
+      .catch((err) => console.error("Erro ao excluir:", err));
+  }
+}
+
+
+ const corpoClientes = document.querySelector("#tabelaClientes");
 function carregarClientes() {
   fetch("http://localhost:3000/cliente")
     .then((res) => res.json())
@@ -323,21 +364,9 @@ function carregarClientes() {
       });
     });
 }
-carregarClientes();
 
-function excluirCliente(id) {
-  if (confirm("Tem certeza que deseja excluir este cliente?")) {
-    fetch(`http://localhost:3000/cliente/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((dados) => {
-        alert(dados.mensagem);
-        carregarClientes();
-      })
-      .catch((err) => console.error("Erro ao excluir:", err));
-  }
-}
+
+
 
 function preencherFormCliente(id, nome, data, email, tel, usuario, senha) {
   idClienteEdicao = id;
@@ -352,6 +381,7 @@ function preencherFormCliente(id, nome, data, email, tel, usuario, senha) {
 }
 
 const formCliente = document.getElementById("formCliente");
+if(formCliente){
 const mensagemCliente = document.getElementById("mensagemCliente");
 
 formCliente.addEventListener("submit", (e) => {
@@ -369,13 +399,12 @@ formCliente.addEventListener("submit", (e) => {
   const url = idClienteEdicao
     ? `http://localhost:3000/cliente/${idClienteEdicao}`
     : "http://localhost:3000/cliente";
-
+ 
   fetch(url, {
     method: metodo,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados),
-  })
-    .then((res) => res.json())
+  }).then((res) => res.json())
     .then(() => {
       mensagemCliente.innerText = idClienteEdicao
         ? "Cliente atualizado!"
@@ -388,6 +417,7 @@ formCliente.addEventListener("submit", (e) => {
       carregarSelects();
     });
 });
+}
 
 function cancelarEdicaoCliente() {
   idClienteEdicao = null;
@@ -396,6 +426,23 @@ function cancelarEdicaoCliente() {
   document.getElementById("btnCancelarCliente").style.display = "none";
   mensagemCliente.innerText = "";
 }
-document
-  .getElementById("btnCancelarCliente")
-  .addEventListener("click", cancelarEdicaoCliente);
+const btnCancelarCliente = document.getElementById("btnCancelarCliente");
+if(btnCancelarCliente){
+  btnCancelarCliente.addEventListener("click", cancelarEdicaoCliente);
+}
+
+
+
+window.onload = function() {
+ if(corpoClientes){
+carregarClientes();
+}
+
+if(corpoTabelaPedidos){
+carregarPedidos();
+}
+
+if(selectPro || selectCli){
+carregarSelects();
+}
+}

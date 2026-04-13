@@ -80,10 +80,10 @@ app.get("/cliente", (req, res) => {
 
 // Criar Cliente
 app.post("/cliente", (req, res) => {
-  const { nome, data_nasc, email, telefone } = req.body;
+  const { nome, data_nasc, email, telefone, login, senha } = req.body;
   const sql =
-    "INSERT INTO cliente (NOME, DATA_NASC, EMAIL, TELEFONE) VALUES (?, ?, ?, ?)";
-  db.query(sql, [nome, data_nasc, email, telefone], (err, result) => {
+    "INSERT INTO cliente (NOME, DATA_NASC, EMAIL, TELEFONE, LOGIN, SENHA) VALUES (?, ?, ?, ?, ?, ?)";
+  db.query(sql, [nome, data_nasc, email, telefone, login, senha], (err, result) => {
     if (err) return res.status(500).json(err);
     res.status(201).json({ id: result.insertId });
   });
@@ -153,10 +153,10 @@ app.delete("/pedido/:id", (req, res) => {
 });
 
 app.post("/cliente", (req, res) => {
-  const { nome, data_nasc, email, telefone } = req.body;
+  const { nome, data_nasc, email, telefone, login, senha } = req.body;
   const sql =
     "INSERT INTO cliente (NOME, DATA_NASC, EMAIL, TELEFONE, LOGIN, SENHA) VALUES (?, ?, ?, ?, ?, ?)";
-  db.query(sql, [nome, data_nasc, email, telefone], (err, result) => {
+  db.query(sql, [nome, data_nasc, email, telefone, login, senha], (err, result) => {
     if (err) return res.status(500).json(err);
     res.json({ mensagem: "Cliente cadastrado!", id: result.insertId });
   });

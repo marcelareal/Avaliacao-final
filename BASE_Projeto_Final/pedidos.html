@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos - Real Acessórios</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="direita">
+       <img src="/src/Rc.jpg" id="imagem">
+      </div>
+      <h1>Real Acessórios</h1>
+      <nav>
+        <ul>
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="pedidos.html">Pedidos</a></li>
+          <li><a href="clientes.html">Clientes</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section id="sessaoPedidos">
+      <h2>Novo Pedido</h2>
+      <form id="formPedido">
+        <label>Cliente:</label>
+        <select id="selectCliente" required>
+          <option value="">Selecione um cliente...</option>
+        </select>
+
+        <label>Produto:</label>
+        <select id="selectProduto" required>
+          <option value="">Selecione um produto...</option>
+        </select>
+
+        <label>Quantidade:</label>
+        <input type="number" id="quantidade" value="1" min="1" required />
+
+        <label>Valor Total (R$):</label>
+        <input type="number" id="valorTotal" step="0.01" readonly required />
+
+        <label>Status do Pedido:</label>
+        <select id="selectStatus" required>
+          <option value="Pendente">Pendente</option>
+          <option value="Pago">Pago</option>
+          <option value="Enviado">Enviado</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+
+        <button type="submit" id="btnFinalizar">Finalizar Pedido</button>
+        <button
+          type="button"
+          id="btnCancelarPedido"
+          style="display: none; background-color: red; color: white"
+        >
+          Cancelar
+        </button>
+      </form>
+      <p id="mensagemPedido"></p>
+    </section>
+
+    <h3>Pedidos</h3>
+    <table border="1" id="tabelaPedidos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Produto</th>
+          <th>Total (R$)</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <footer>
+      <p>© 2026 Real Acessórios. Todos os direitos reservados.</p>
+    </footer>
+  </body>
+</html>
